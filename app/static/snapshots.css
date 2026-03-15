@@ -44,6 +44,107 @@
   background: rgba(255,255,255,.92);
 }
 
+/* Info card (LLM response) */
+.info-card{
+  margin-top: 16px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.70);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+}
+
+.info-card__header{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.info-card__title{
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: .2px;
+}
+
+.info-card__meta{
+  margin: 6px 0 0 0;
+  color: rgba(0,0,0,.66);
+  font-size: .92rem;
+}
+
+.info-card__body{
+  padding: 14px 16px 16px 16px;
+}
+
+.info-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.info-pill{
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: .82rem;
+  font-weight: 600;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.info-link{
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  opacity: .9;
+  word-break: break-word;
+}
+
+.info-text{
+  line-height: 1.6;
+  font-size: .98rem;
+  color: rgba(0,0,0,.88);
+}
+
+.info-error{
+  border: 1px solid rgba(180, 30, 35, .25);
+  background: rgba(180, 30, 35, .08);
+  color: rgba(120, 10, 15, .95);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.info-skeleton .bar{
+  height: 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,
+    rgba(0,0,0,.06) 0%,
+    rgba(0,0,0,.10) 35%,
+    rgba(0,0,0,.06) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.1s infinite linear;
+  margin: 10px 0;
+}
+
+.info-skeleton .w60{ width: 60%; }
+.info-skeleton .w80{ width: 80%; }
+.info-skeleton .w90{ width: 90%; }
+
+@keyframes shimmer{
+  0%{ background-position: 200% 0; }
+  100%{ background-position: -200% 0; }
+}
+
 /* Make the select look like the other inputs */
 .snapshot-form select{
   appearance: none;

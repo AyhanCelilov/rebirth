@@ -1,10 +1,11 @@
 import os
 import requests
 from data_collector import fetch_archive
-from flask import Flask, render_template, request, send_file, redirect, url_for, flash
+from flask import Flask, render_template, request, jsonify, send_file, redirect, url_for, flash
 from extensions import db
 from models import SearchLog
 from resurrect import save_site
+from llm import archieveAnalyse
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secretkey'
@@ -72,5 +73,25 @@ def delete_search_log(search_id):
     flash(f"Search deleted successfully.")
     return redirect(url_for('history'))
 
+
+@app.route("/get_info", methods=["POST"])
+def get_info():
+    try:
+        data = request.get_json(silent=True) or {}
+        timestamp = (data.get('date') or '').strip()
+        website_url = (data.get('website') or '').strip()
+
+        if not timestamp or not website_url:
+            return jsonify({"error": "Missing 'website' or 'date'."}), 400
+
+        response = archieveAnalyse(website_url, timestamp)
+        return jsonify({"result": response})
+    except Exception as e:
+        print(f"Error during IA analyse: {e}")
+        return jsonify({"error": "Error during IA analyse!"}), 500
+
+
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 

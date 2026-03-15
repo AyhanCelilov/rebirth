@@ -23,10 +23,115 @@
             </div>
 
             <div class="snapshot-actions">
-                <button class="btn btn-primary" type="submit">Load Snapshot</button>
                 <a class="btn btn-secondary" href="{{ url_for('home') }}">Back</a>
+                <button class="btn btn-primary" type="submit">Load Snapshot</button>
+                <button class="btn btn-primary" id="getInfoBtn" type="button" name="action" value="info">Get Information</button>
             </div>
         </form>
+
+        <section id="infoCard" class="info-card" hidden aria-live="polite"></section>
+            <header class="info-card__header">
+                <div>
+                    <h3 class="info-card__title">Historical Context</h3>
+                    <p class="info-card__meta" id="infoMeta"></p>
+                </div>
+                <button class="btn btn-secondary info-card__close" id="closeInfoBtn" type="button">Close</button>
+            </header>
+            <div class="info-card__body" id="infoBody"></div>
+        </section>
+
+
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const getInfoBtn = document.getElementById('getInfoBtn');
+            const closeInfoBtn = document.getElementById('closeInfoBtn');
+            const infoCard = document.getElementById('infoCard');
+            const infoMeta = document.getElementById('infoMeta');
+            const infoBody = document.getElementById('infoBody');
+
+            const escapeHtml = (str) => String(str ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+
+            const showCard = () => {
+                infoCard.hidden = false;
+            };
+
+            const hideCard = () => {
+                infoCard.hidden = true;
+            };
+
+            closeInfoBtn.addEventListener('click', hideCard);
+
+            getInfoBtn.addEventListener('click', async () => {
+                const select = document.getElementById('snapshot');
+                const selectedValue = select.value;
+
+                if (!selectedValue) {
+                    alert('Please select a snapshot first!');
+                    return;
+                }
+
+                const [url, timestamp] = selectedValue.split('|', 2);
+
+                showCard();
+                infoMeta.textContent = `Snapshot: ${timestamp}`;
+                infoBody.innerHTML = `
+                    <div class="info-skeleton">
+                        <div class="bar w60"></div>
+                        <div class="bar w90"></div>
+                        <div class="bar w80"></div>
+                    </div>
+                `;
+
+                getInfoBtn.innerText = 'Analyzing...';
+                getInfoBtn.disabled = true;
+
+                try {
+                    const response = await fetch('{{ url_for("get_info") }}', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ website: url, date: timestamp })
+                    });
+
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(text || `HTTP ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const result = data?.result ?? '';
+
+                    infoBody.innerHTML = `
+                        <div class="info-content">
+                            <div class="info-row">
+                                <span class="info-pill">URL</span>
+                                <a class="info-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">
+                                    ${escapeHtml(url)}
+                                </a>
+                            </div>
+
+                            <div class="info-text">${escapeHtml(result).replaceAll('\n', '<br>')}</div>
+                        </div>
+                    `;
+                } catch (error) {
+                    console.error(error);
+                    infoBody.innerHTML = `
+                        <div class="info-error">
+                            <strong>Couldn't get information.</strong>
+                            <div class="hint">Check the Flask terminal and browser console.</div>
+                        </div>
+                    `;
+                } finally {
+                    getInfoBtn.innerText = 'Get Information';
+                    getInfoBtn.disabled = false;
+                }
+            });
+        });
+        </script>
 </section>
 {% endblock %}
