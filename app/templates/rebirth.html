@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Rebirth a website{% endblock %}
+
+{% block content %}
+    <section class="panel">
+        <header class="panel-header">
+            <h2>Resurrect a website</h2>
+            <p>Pick a URL and a date. We’ll take you back.</p>
+        </header>
+
+        <form class="form" method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="field">
+                <div class="label">{{ form.url.label }}</div>
+                {{ form.url(class_="input", placeholder="https://example.com") }}
+            </div>
+
+            <div class="field">
+                <div class="label">{{ form.date.label }}</div>
+                {{ form.date(class_="input") }}
+            </div>
+
+            {{ form.submit(class_="btn btn-primary") }}
+        </form>
+    </section>
+
+{% endblock %}

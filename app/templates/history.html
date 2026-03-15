@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Search History{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
+
+<section class="panel">
+    <div class="panel-header">
+        <h2>Search history</h2>
+        <p>Previously loaded snapshot URLs.</p>
+    </div>
+
+    {% if search_logs and search_logs|length > 0 %}
+        <ul class="flash-list history-list">
+            {% for search in search_logs %}
+                <li class="flash-item history-item">
+                    <div class="history-meta">
+                        <a class="history-url" href="{{ search.url }}" target="_blank" rel="noreferrer">{{ search.url }}</a>
+                        <div class="history-date">Snapshot from: {{ search.date }}</div>
+                    </div>
+
+                    <a class="btn btn-danger" href="{{ url_for('delete_search_log', search_id=search.id) }}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="hint" style="margin-top: 16px;">No history yet. Load a snapshot and come back.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,68 @@
+/* Snapshots page styles
+   Works with baseStyle.css + rebirth.css components.
+*/
+
+.snapshots{
+  display: grid;
+  gap: 16px;
+}
+
+.snapshots-heading{
+  display: grid;
+  gap: 6px;
+}
+
+.snapshots-heading h2{
+  font-family: "Roboto Slab", serif;
+  font-weight: 650;
+  margin: 0;
+}
+
+.snapshots-heading p{
+  margin: 0;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.snapshot-form{
+  display: grid;
+  gap: 14px;
+}
+
+.snapshot-select{
+  width: 100%;
+}
+
+.snapshot-actions{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-secondary{
+  background: rgba(255,255,255,.92);
+}
+
+/* Make the select look like the other inputs */
+.snapshot-form select{
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(0,0,0,.55) 50%),
+    linear-gradient(135deg, rgba(0,0,0,.55) 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px),
+    0 0;
+  background-size: 6px 6px, 6px 6px, 100% 100%;
+  background-repeat: no-repeat;
+  padding-right: 40px;
+}
+
+@media (max-width: 640px){
+  .snapshot-actions{
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

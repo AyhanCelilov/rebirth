@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} Select Snapshot {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='snapshots.css') }}">
+
+<section class="snapshots">
+    <div class="panel">
+        <div class="panel-header snapshots-heading">
+            <h2>Select an archived version</h2>
+            <p>Pick a timestamp below to load the captured site.</p>
+        </div>
+
+        <form class="form snapshot-form" action="/load_snapshot" method="post">
+            <div class="field">
+                <label class="label" for="snapshot">Available snapshots</label>
+                <select class="input snapshot-select" name="snapshot" id="snapshot" required>
+                    {% for s in snapshots %}
+                    <option value="{{ s.url }}|{{s.timestamp}}">{{ s.timestamp }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="snapshot-actions">
+                <button class="btn btn-primary" type="submit">Load Snapshot</button>
+                <a class="btn btn-secondary" href="{{ url_for('home') }}">Back</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

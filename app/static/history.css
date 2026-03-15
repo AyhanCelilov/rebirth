@@ -1,0 +1,44 @@
+/* History page tweaks (built on baseStyle.css + rebirth.css) */
+
+.history-list{
+  margin-top: 16px;
+}
+
+.history-item{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.history-meta{
+  display: grid;
+  gap: 6px;
+}
+
+.history-url{
+  word-break: break-word;
+}
+
+.history-date{
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+.btn-danger{
+  border-color: rgba(153, 27, 27, .35);
+  background: linear-gradient(135deg, rgba(220, 38, 38, .12), rgba(220, 38, 38, .18));
+  color: #991b1b;
+}
+
+.btn-danger:hover{
+  border-color: rgba(153, 27, 27, .5);
+  background: linear-gradient(135deg, rgba(220, 38, 38, .16), rgba(220, 38, 38, .24));
+}
+
+@media (max-width: 640px){
+  .history-item{
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}

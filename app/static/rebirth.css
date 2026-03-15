@@ -1,0 +1,250 @@
+/* Rebirth UI layer
+   Keeps your existing baseStyle.css vibe, but adds a modern layout system + components.
+*/
+
+:root{
+  --bg: #fbf1e3; /* matches antiquewhite */
+  --surface: rgba(255,255,255,.78);
+  --surface-solid: #ffffff;
+  --text: #151515;
+  --muted: rgba(21, 21, 21, .72);
+  --shadow: 0 18px 40px rgba(0,0,0,.08);
+
+  --border: rgba(0,0,0,.12);
+  --border-strong: rgba(0,0,0,.18);
+
+  --brand: #000000;
+  --brand-contrast: #ffffff;
+  --accent: #3b82f6;
+  --accent-2: #a855f7;
+
+  --radius: 14px;
+}
+
+html, body{
+  height: 100%;
+}
+
+body{
+  color: var(--text);
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  background:
+    radial-gradient(1200px 500px at 15% 5%, rgba(168, 85, 247, .12), transparent 55%),
+    radial-gradient(900px 420px at 85% 10%, rgba(59, 130, 246, .12), transparent 55%),
+    var(--bg);
+}
+
+.container{
+  width: min(1100px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.page{
+  padding: 28px 0 48px;
+}
+
+/* Header */
+.site-header{
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
+.header-inner{
+  padding: 22px 0 14px;
+}
+
+.brand h1{
+  margin: 0;
+}
+
+.tagline{
+  margin-top: 6px;
+  font-family: "Roboto Slab", serif;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.site-nav{
+  background: #000;
+}
+
+.nav-inner{
+  display: flex;
+  gap: 10px;
+}
+
+.site-nav a{
+  border-radius: 10px;
+}
+
+/* Flash messages */
+.flash-wrap{
+  padding-top: 14px;
+}
+
+.flash-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.flash-item{
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(0,0,0,.10);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+/* Panels / cards */
+.panel,
+.hero-card{
+  background: var(--surface);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.panel{
+  padding: 22px;
+}
+
+.panel-header h2{
+  font-family: "Roboto Slab", serif;
+  font-weight: 600;
+  letter-spacing: .2px;
+  margin: 0;
+}
+
+.panel-header p{
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+/* Home hero */
+.hero{
+  padding: 18px 0 28px;
+}
+
+.hero-card{
+  padding: 28px;
+}
+
+.hero-title{
+  font-family: "Roboto Slab", serif;
+  font-weight: 650;
+  margin: 0;
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+}
+
+.hero-subtitle{
+  margin-top: 10px;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* Form components */
+.form{
+  margin-top: 18px;
+}
+
+.field{
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.label{
+  font-weight: 600;
+}
+
+.input-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.input,
+.form input[type="text"],
+.form input[type="url"],
+.form input[type="date"],
+.form select{
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,.92);
+  padding: 12px 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .05s ease;
+}
+
+.input:focus,
+.form input[type="text"]:focus,
+.form input[type="url"]:focus,
+.form input[type="date"]:focus,
+.form select:focus{
+  border-color: rgba(59, 130, 246, .55);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, .18);
+}
+
+.hint{
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+/* Buttons */
+.btn,
+button{
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 650;
+  cursor: pointer;
+  background: rgba(255,255,255,.92);
+  transition: transform .05s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.btn:active,
+button:active{
+  transform: translateY(1px);
+}
+
+.btn-primary{
+  color: var(--brand-contrast);
+  border-color: rgba(0,0,0,.2);
+  background: linear-gradient(135deg, #111 0%, #111 55%, rgba(168,85,247,.55) 130%);
+  box-shadow: 0 10px 25px rgba(0,0,0,.18);
+}
+
+.btn-primary:hover{
+  box-shadow: 0 14px 34px rgba(0,0,0,.22);
+}
+
+/* Footer */
+.site-footer{
+  padding: 18px 0 30px;
+  color: var(--muted);
+}
+
+.site-footer hr{
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.10);
+  margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 640px){
+  .input-row{
+    grid-template-columns: 1fr;
+  }
+
+  header nav a{
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}

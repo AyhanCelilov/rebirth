@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Rebirth Home {% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-card">
+        <h2 class="hero-title">Find a snapshot</h2>
+        <p class="hero-subtitle">Paste a URL and we’ll fetch archived versions you can load.</p>
+
+        <form class="form" method="post">
+            <label class="label" for="rebirthURL">Website URL</label>
+            <div class="input-row">
+                <input class="input" type="url" name="rebirthURL" id="rebirthURL" placeholder="https://example.com" required>
+                <button class="btn btn-primary" type="submit">Rebirth it</button>
+            </div>
+            <p class="hint">Tip: try a popular site like news, blogs, or a personal domain.</p>
+        </form>
+    </div>
+</section>
+{% endblock %}
