@@ -14,7 +14,7 @@ def save_site(html_content, domain):
         filename = f"{_safe_filename(domain)}.html"
         path = os.path.join(folder, filename)
 
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write(html_content)
         return filename
     except TypeError:snapshot.html
