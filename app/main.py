@@ -1,6 +1,7 @@
-
 import os
-import re6
+from dotenv import load_dotenv
+load_dotenv()
+import re
 import requests
 from flask import Flask, render_template, request, jsonify, send_file, redirect, url_for, flash
 import time
@@ -19,7 +20,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-
+print(os.getenv("OPENAI_API_KEY"))
 
 _nostalgic_cache = {
     "ts": 0.0,

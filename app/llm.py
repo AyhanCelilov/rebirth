@@ -7,6 +7,8 @@ import json
 
 load_dotenv()
 
+api_key = os.getenv("OPENAI_API_KEY")
+
 # Initialize model and and creativity
 llm = ChatOpenAI(model="gpt-5.4", temperature=0.6)
 str_parser = StrOutputParser()
