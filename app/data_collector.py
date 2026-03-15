@@ -1,10 +1,11 @@
 from datetime import datetime
 import requests
 from collections import defaultdict
-
+#as we need multiple snapshots instead of 1, we use cdx instead of simple api
 def fetch_archive(domain):
     api_url = f"http://web.archive.org/cdx/search/cdx?url={domain}&output=json&limit=100000&filter=statuscode:200"
 
+    #we create empty snapshots array and add each snapshot to array by parsing it to year and month    
     try:
         response = requests.get(api_url).json()
         snapshots = []
@@ -21,7 +22,7 @@ def fetch_archive(domain):
                 "timestamp": dt.strftime("%d %b %Y"),
                 "url": snapshot_url
             })
-
+        #this is for displaying 1 snapshot per month otherwhise we should display more than a million snapshots which simple computer cannot handle
         limited_snapshots = []
         for month in sorted(per_month.keys(), reverse=True):  
             limited_snapshots.extend(per_month[month][:1])

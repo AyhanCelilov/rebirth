@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %} Snapshot Viewer {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='snapshots.css') }}">
+
+<section class="snapshots">
+  <div class="panel">
+    <div class="panel-header snapshots-heading">
+      <h2>Snapshot Viewer</h2>
+      <p>You’re viewing the archived site inside Rebirth.</p>
+    </div>
+
+    <div class="snapshot-actions" style="margin-bottom: 12px;">
+      <a class="btn btn-secondary" href="{{ url_for('home') }}">Back</a>
+      {% if original_url %}
+      <a class="btn btn-primary" href="{{ original_url }}" target="_blank" rel="noreferrer">Open original</a>
+      {% endif %}
+      <a class="btn btn-secondary" href="{{ snapshot_url }}" target="_blank" rel="noreferrer">Open Wayback</a>
+    </div>
+
+    <div class="frame-wrap">
+      <iframe
+        class="snapshot-frame"
+        src="{{ snapshot_url }}"
+        title="Archived snapshot"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
+      ></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

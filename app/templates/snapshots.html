@@ -21,20 +21,24 @@
                     {% endfor %}
                 </select>
             </div>
-
+            <input type="hidden" name="domain" value="{{ domain }}">
             <div class="snapshot-actions">
                 <a class="btn btn-secondary" href="{{ url_for('home') }}">Back</a>
                 <button class="btn btn-primary" type="submit">Load Snapshot</button>
                 <button class="btn btn-primary" id="getInfoBtn" type="button" name="action" value="info">Get Information</button>
+                <button class="btn btn-primary" formaction="/best_snapshot" formmethod="post">Find Best Snapshot</button>
+
             </div>
         </form>
+        
 
-        <section id="infoCard" class="info-card" hidden aria-live="polite"></section>
+        <section id="infoCard" class="info-card" hidden aria-live="polite">
             <header class="info-card__header">
                 <div>
                     <h3 class="info-card__title">Historical Context</h3>
                     <p class="info-card__meta" id="infoMeta"></p>
                 </div>
+
                 <button class="btn btn-secondary info-card__close" id="closeInfoBtn" type="button">Close</button>
             </header>
             <div class="info-card__body" id="infoBody"></div>
@@ -42,6 +46,16 @@
 
 
     </div>
+    {% if best_timestamp %}
+<div class="best-snapshot-card">
+    <h3>Best Snapshot Timestamp:</h3>
+    <p>{{ best_timestamp }}</p>
+    <p>Use this timestamp to select the snapshot manually.</p>
+</div>
+{% elif message %}
+<p>{{ message }}</p>
+{% endif %}
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const getInfoBtn = document.getElementById('getInfoBtn');
@@ -104,7 +118,21 @@
                     }
 
                     const data = await response.json();
-                    const result = data?.result ?? '';
+                    const summary = data?.summary ?? data?.result ?? '';
+                    const designNotes = Array.isArray(data?.design_notes) ? data.design_notes : [];
+                    const contextOfTheTime = data?.context_of_the_time ?? '';
+                    const impact = data?.impact ?? '';
+
+                    const section = (title, html) => {
+                        if (!html) return '';
+                        return `<div class="info-section"><h4 class="info-section__title">${escapeHtml(title)}</h4>${html}</div>`;
+                    };
+
+                    const list = (items) => {
+                        if (!items?.length) return '';
+                        const lis = items.map((x) => `<li>${escapeHtml(x)}</li>`).join('');
+                        return `<ul class="info-list">${lis}</ul>`;
+                    };
 
                     infoBody.innerHTML = `
                         <div class="info-content">
@@ -115,7 +143,10 @@
                                 </a>
                             </div>
 
-                            <div class="info-text">${escapeHtml(result).replaceAll('\n', '<br>')}</div>
+                            ${section('Summary', `<p class="info-text">${escapeHtml(summary).replaceAll('\n', '<br>')}</p>`)}
+                            ${section('Design notes', list(designNotes))}
+                            ${section('Context of the time', `<p class="info-text">${escapeHtml(contextOfTheTime).replaceAll('\n', '<br>')}</p>`)}
+                            ${section('Impact', `<p class="info-text">${escapeHtml(impact).replaceAll('\n', '<br>')}</p>`)}
                         </div>
                     `;
                 } catch (error) {

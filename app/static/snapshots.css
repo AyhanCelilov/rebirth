@@ -110,9 +110,44 @@
 }
 
 .info-text{
-  line-height: 1.6;
+  margin: 0;
+  line-height: 1.7;
   font-size: .98rem;
   color: rgba(0,0,0,.88);
+}
+
+/* Section spacing inside the info card */
+.info-section{
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.info-section__title{
+  margin: 0 0 10px;
+  font-size: .82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.70);
+}
+
+/* More breathing room between paragraphs if the model outputs multiple <p> */
+.info-section p{
+  margin: 0;
+}
+
+.info-section p + p{
+  margin-top: 10px;
+}
+
+.info-list{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.info-list li{
+  margin: 8px 0;
+  line-height: 1.55;
 }
 
 .info-error{
@@ -166,4 +201,20 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+/* Snapshot viewer (iframe) */
+.frame-wrap{
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255,255,255,.6);
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+}
+
+.snapshot-frame{
+  width: 100%;
+  height: min(78vh, 920px);
+  border: 0;
+  background: #fff;
 }
